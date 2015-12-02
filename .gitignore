@@ -2,3 +2,11 @@ CGV.*
 Debug/*
 Release/*
 packages.config
+*.o
+*~
+CMakeCache.txt
+**/CMakeFiles/*
+3dstudio
+#*
+cmake_install.cmake
+Makefile

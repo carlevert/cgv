@@ -1,17 +1,20 @@
 #pragma once
 
 #include <iostream>
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <gtk/gtk.h>
 
 #include "Application.hpp"
 
-const unsigned int INITIAL_WINDOW_WIDTH = 640;
-const unsigned int INITIAL_WINDOW_HEIGHT = 480;
+extern "C" {
+#include "ass2gui.h"
+}
+
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 Application* application;
-
-
+void* app;
 
 GLFWwindow* SetupGlfw();
 void GlfwErrorCallback(int error, const char* description);
