@@ -26,8 +26,10 @@ public:
 	float GetFovDegrees();
 	void SetFovDegrees(float fov);
 	void SetZNear(float z_near);
+  float GetZFar();
 	void SetZFar(float z_far);
-	void SetTop(float top);
+  float GetTop();
+  void SetTop(float top);
 
 	float GetObliqueScale();
 	void SetObliqueScale(float oblique_scale);

@@ -19,9 +19,19 @@ int main(int argc, char** argv) {
 
 	guiInit(&argc, argv);
 	initGuiWindow("ass2gui.glade");
-	gui_set_projection_perspective();
-	gui_set_option_fov(80.0f);
+
+	Projection* projection = application->GetProjection();
 	
+ 	gui_set_option_far(projection->GetZFar());
+	gui_set_option_top(projection->GetTop());
+	gui_set_option_oblique_angle(projection->GetObliqueAngleDegrees());
+	gui_set_option_oblique_scale(projection->GetObliqueScale());
+	if (projection->GetProjectionType() == ProjectionType::PERSPECTIVE)
+	  gui_set_projection_perspective();
+	else
+	  gui_set_projection_parallel();
+	gui_set_option_fov(projection->GetFovDegrees());
+
 	while (!glfwWindowShouldClose(window)) {
 		if (rotating_camera_x_y) {
 			glfwGetCursorPos(window, &end_x, &end_y);
