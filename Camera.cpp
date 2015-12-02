@@ -19,8 +19,8 @@ Camera::~Camera()
 
 void Camera::Translate(glm::vec3 translation)
 {
-	this->translation += (rotation_matrix * glm::vec4(translation, 0.0f));
-	this->translation_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(this->translation));
+	this->translation += glm::transpose(rotation_matrix) * glm::vec4(translation, 0.0f);
+	this->translation_matrix = glm::translate(glm::mat4(1.0f), -1.0f *glm::vec3(this->translation));
 	InvalidateViewMatrix();
 }
 
@@ -30,11 +30,10 @@ glm::vec3 Camera::GetTranslation()
 }
 
 void Camera::SetTranslation(glm::vec3 translation) {
-	this->translation = rotation_matrix * glm::vec4(translation, 0.0f);
-	this->translation_matrix = glm::translate(glm::mat4(1.0f), glm::vec3(this->translation));
+	this->translation = glm::transpose(rotation_matrix) * glm::vec4(translation, 0.0f);
+	this->translation_matrix = glm::translate(glm::mat4(1.0f), -1.0f * glm::vec3(this->translation));
 	InvalidateViewMatrix();
 }
-
 
 glm::mat4 Camera::GetViewMatrix()
 {
@@ -66,12 +65,20 @@ void Camera::SetRotationY(float rotation)
 	InvalidateViewMatrix();
 }
 
+void Camera::SetRotationZ(float rotation)
+{
+	rotation_z = rotation;
+	rotation_matrix_z = glm::rotate(identity, rotation_z, z_axis);
+	InvalidateViewMatrix();
+}
+
 void Camera::RotateZ(int direction) {
 	if (direction == 1)
 		rotation_z += 0.1f;
 	else
 		rotation_z -= 0.1f;
 	rotation_matrix_z = glm::rotate(identity, rotation_z, z_axis);
+	rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z;
 	InvalidateViewMatrix();
 }
 

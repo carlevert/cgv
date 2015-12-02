@@ -9,7 +9,7 @@ Projection::Projection()
 	SetTop(1.0f);
 	SetProjectionType(ProjectionType::PERSPECTIVE);
 	SetObliqueAngleDegrees(45.0f);
-	SetObliqueScale(0.5f);
+	SetObliqueScale(0.0f);
 }
 
 Projection::~Projection()

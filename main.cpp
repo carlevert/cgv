@@ -11,11 +11,11 @@ int main(int argc, char** argv) {
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
-		std::cout << "glewInit() failed"  << std::endl;
+		std::cout << "glewInit() failed" << std::endl;
 	}
 
 	application = new Application();
-	app = (void*) application;
+	app = (void*)application;
 
 
 
@@ -35,6 +35,10 @@ int main(int argc, char** argv) {
 		gui_set_projection_parallel();
 	gui_set_option_fov(projection->GetFovDegrees());
 #endif // __unix__
+
+#ifndef __unix__
+	application->OpenOffFile("off/cube.off");
+#endif
 
 
 	while (!glfwWindowShouldClose(window)) {
@@ -71,7 +75,7 @@ GLFWwindow* SetupGlfw()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	GLFWwindow* window = glfwCreateWindow(Application::INITIAL_WINDOW_WIDTH,
-					      Application::INITIAL_WINDOW_HEIGHT, "Assignment 2", NULL, NULL);
+		Application::INITIAL_WINDOW_HEIGHT, "Assignment 2", NULL, NULL);
 
 	if (!window) {
 		glfwTerminate();
@@ -209,11 +213,11 @@ void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 		break;
 	case GLFW_KEY_A:
 		// Right,  move p_0 and p_ref relative the cameras positive x-axis
-		camera->Translate(glm::vec3(delta, 0.0f, 0.0f));
+		camera->Translate(glm::vec3(-delta, 0.0f, 0.0f));
 		break;
 	case GLFW_KEY_D:
 		// Left, move p_0 and p_ref relative the cameras negative x-axis
-		camera->Translate(glm::vec3(-delta, 0.0f, 0.0f));
+		camera->Translate(glm::vec3(delta, 0.0f, 0.0f));
 		break;
 	case GLFW_KEY_Z:
 		// Forward, move p_0 and p_ref relative the cameras negative z-axis

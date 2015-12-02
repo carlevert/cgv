@@ -1,7 +1,8 @@
 #pragma once
 
-#include <stdexcept>
 
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -24,7 +25,7 @@ private:
 	glm::mat4 translation_matrix = glm::mat4(1.0f);
 	glm::mat4 rotation_matrix = glm::mat4(1.0f);
 
-	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, -2.0f);
+	glm::vec3 initial_position = glm::vec3(0.0f, 0.0f, 2.0f);
 
 	void InvalidateViewMatrix();
 	bool* invalid_view_matrix = nullptr;
@@ -44,7 +45,7 @@ public:
 
 	float GetRotationY();
 	void SetRotationY(float rotation_y);
-
+	void SetRotationZ(float rotation_z);
 	void RotateZ(int direction);
 
 	glm::mat4 GetViewMatrix();
