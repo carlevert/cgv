@@ -1,6 +1,6 @@
 #include "OffParser.hpp"
 
-Object* OffParser::ParseOffFile(string filename)
+Object * OffParser::ParseOffFile(string filename)
 {
 	LineReader *line_reader = LineReader::Open(filename);
 	Object *object;
