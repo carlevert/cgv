@@ -5,21 +5,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-void PrintMatrix(glm::mat4 matrix, std::string text) {
-	float* values = glm::value_ptr(matrix);
-	std::cout << text << std::endl;
-	for (int i = 0; i < 16; i++) {
-		std::cout << std::fixed << std::right << values[i] << "  ";
-		if ((i + 1) % 4 == 0)
-			std::cout << std::endl;
-	}
-}
-
-
 Application::Application()
 {
 	SetupOpenGl();
 	current_object = nullptr;
+	program_object = nullptr;
 	camera.SetInvalidViewMatrixRef(&invalid_view_matrix);
 	projection.SetInvalidProjectionMatrixRef(&invalid_projection_matrix);
 	model.SetInvalidModelMatrixRef(&invalid_model_matrix);
@@ -61,10 +51,14 @@ void Application::SetupOpenGl()
 
 void Application::OpenOffFile(string filename)
 {
-	if (current_object != nullptr) {
-		delete current_object;
-		current_object = nullptr;
-	}
+  if (current_object != nullptr) {
+    delete current_object;
+    current_object = nullptr;
+  }
+  if (program_object != nullptr) {
+    delete program_object;
+    program_object = nullptr;
+  }
 	current_object = OffParser::ParseOffFile(filename);
 	current_object->Normalize();
 	current_object->Triangulate();
