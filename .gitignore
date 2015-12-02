@@ -1,0 +1,4 @@
+CGV.*
+Debug/*
+Release/*
+packages.config
