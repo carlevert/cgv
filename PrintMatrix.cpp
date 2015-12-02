@@ -1,10 +1,4 @@
-#ifdef PRINT_MATRIX
-#define PRINT_MATRIX
-
-#include <iostream>
-#include <string>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "PrintMatrix.hpp"
 
 void PrintMatrix(glm::mat4 matrix, std::string text) {
 	float* values = glm::value_ptr(matrix);
@@ -15,5 +9,3 @@ void PrintMatrix(glm::mat4 matrix, std::string text) {
 			std::cout << std::endl;
 	}
 }
-
-#endif

@@ -11,11 +11,31 @@ int main(int argc, char** argv) {
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
-		std::cout << "glewInit() failed" << std::endl;
+		std::cout << "glewInit() failed"  << std::endl;
 	}
 
 	application = new Application();
-	application->OpenOffFile("off/cube.off");
+	app = (void*) application;
+
+
+
+#ifdef __unix__
+	guiInit(&argc, argv);
+	initGuiWindow("ass2gui.glade");
+
+	Projection* projection = application->GetProjection();
+
+	gui_set_option_far(projection->GetZFar());
+	gui_set_option_top(projection->GetTop());
+	gui_set_option_oblique_angle(projection->GetObliqueAngleDegrees());
+	gui_set_option_oblique_scale(projection->GetObliqueScale());
+	if (projection->GetProjectionType() == ProjectionType::PERSPECTIVE)
+		gui_set_projection_perspective();
+	else
+		gui_set_projection_parallel();
+	gui_set_option_fov(projection->GetFovDegrees());
+#endif // __unix__
+
 
 	while (!glfwWindowShouldClose(window)) {
 		if (rotating_camera_x_y) {
@@ -28,6 +48,9 @@ int main(int argc, char** argv) {
 		application->Display();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+#ifdef __unix__
+		guiMainIteration();
+#endif // __unix__
 	}
 
 	delete application;
@@ -47,8 +70,8 @@ GLFWwindow* SetupGlfw()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(INITIAL_WINDOW_WIDTH,
-		INITIAL_WINDOW_HEIGHT, "Assignment 2", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(Application::INITIAL_WINDOW_WIDTH,
+					      Application::INITIAL_WINDOW_HEIGHT, "Assignment 2", NULL, NULL);
 
 	if (!window) {
 		glfwTerminate();

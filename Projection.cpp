@@ -61,12 +61,22 @@ void Projection::SetZNear(float z_near)
 	SetInvalidProjectionMatrix();
 }
 
+float Projection::GetZFar()
+{
+	return z_far;
+}
+
 void Projection::SetZFar(float z_far)
 {
 	this->z_far = z_far;
 	SetInvalidProjectionMatrix();
 }
 
+
+float Projection::GetTop()
+{
+	return top;
+}
 void Projection::SetTop(float top)
 {
 	this->top = top;
@@ -152,4 +162,3 @@ glm::mat4 Projection::GetProjectionMatrix()
 	}
 	return projection_matrix;
 }
-

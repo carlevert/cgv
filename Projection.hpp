@@ -26,7 +26,9 @@ public:
 	float GetFovDegrees();
 	void SetFovDegrees(float fov);
 	void SetZNear(float z_near);
+	float GetZFar();
 	void SetZFar(float z_far);
+	float GetTop();
 	void SetTop(float top);
 
 	float GetObliqueScale();
@@ -35,10 +37,10 @@ public:
 	void SetObliqueAngle(float oblique_angle);
 	float GetObliqueAngleDegrees();
 	void SetObliqueAngleDegrees(float oblique_angle_degrees);
-	
+
 	void SetProjectionType(ProjectionType type);
 	ProjectionType GetProjectionType();
-	
+
 	void SetViewportDimensions(int width, int height);
 	void SetInvalidProjectionMatrixRef(bool* invalid_projection_matrix);
 	glm::mat4 GetProjectionMatrix();
@@ -62,4 +64,3 @@ private:
 	int viewport_width, viewport_height;
 	void SetInvalidProjectionMatrix();
 };
-
