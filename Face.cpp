@@ -19,7 +19,7 @@ void Face::SetNumVertices(unsigned int num_vertices)
 	vertices = new unsigned int[num_vertices];
 }
 
-unsigned int Face::GetNumVertices()
+unsigned int Face::GetNumVertices() const
 {
 	return num_vertices;
 }
@@ -29,7 +29,7 @@ void Face::SetVertices(unsigned int* vertices)
 	this->vertices = vertices;
 }
 
-unsigned int* Face::GetVertices()
+unsigned int* Face::GetVertices() const
 {
 	return vertices;
 }
@@ -57,7 +57,7 @@ Face* Face::RemoveEar()
 	return new_face;
 }
 
-void Face::Print()
+void Face::Print() const
 {
 	for (unsigned int i = 0; i < num_vertices; i++)
 		std::cout << vertices[i] << " ";

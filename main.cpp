@@ -4,6 +4,7 @@ float scale = 0.005f;
 bool rotating_camera_x_y = false;
 double start_x, start_y, end_x, end_y;
 float start_rot_x, start_rot_y;
+glm::vec3 x_axis, y_axis;
 
 int main(int argc, char** argv) {
 
@@ -16,9 +17,7 @@ int main(int argc, char** argv) {
 
 	application = new Application();
 	app = (void*)application;
-
-
-
+	
 #ifdef __unix__
 	guiInit(&argc, argv);
 	initGuiWindow("ass2gui.glade");
@@ -46,8 +45,8 @@ int main(int argc, char** argv) {
 			glfwGetCursorPos(window, &end_x, &end_y);
 			float dx = (float)(end_x - start_x);
 			float dy = (float)(end_y - start_y);
-			application->GetCamera()->SetRotationX(start_rot_x + dy * scale);
-			application->GetCamera()->SetRotationY(start_rot_y + dx * scale);
+			application->GetCamera()->SetRotationX(dy * scale, x_axis);
+			application->GetCamera()->SetRotationY(dx * scale, y_axis);
 		}
 		application->Display();
 		glfwSwapBuffers(window);
@@ -116,11 +115,12 @@ void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mod
 			end_x = start_x;
 			end_y = start_y;
 			rotating_camera_x_y = true;
-			start_rot_x = camera->GetRotationX();
-			start_rot_y = camera->GetRotationY();
+			x_axis = camera->GetXAxis();
+			y_axis = camera->GetYAxis();
 		}
 		else if (action == GLFW_RELEASE) {
 			rotating_camera_x_y = false;
+			camera->Commit();
 		}
 	}
 }

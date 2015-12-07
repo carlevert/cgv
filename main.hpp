@@ -11,16 +11,13 @@ extern "C" {
 }
 #endif
 
-
 #include "Application.hpp"
-
-
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 Application* application;
 void* app;
-
+int main(int argc, char** argv);
 GLFWwindow* SetupGlfw();
 void GlfwErrorCallback(int error, const char* description);
 void GlfwWindowCloseCallback(GLFWwindow* window);

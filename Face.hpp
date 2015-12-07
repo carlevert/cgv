@@ -7,10 +7,10 @@ public:
 	Face();
 	~Face();
 	void SetNumVertices(unsigned int num_vertices);
-	unsigned int GetNumVertices();
+	unsigned int GetNumVertices() const;
 	void SetVertices(unsigned int* vertices);
-	unsigned int* GetVertices();
-	void Print();
+	unsigned int* GetVertices() const;
+	void Print() const;
 	Face* RemoveEar();
 
 private:

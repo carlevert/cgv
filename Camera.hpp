@@ -41,14 +41,18 @@ public:
 	void SetTranslation(glm::vec3 translation);
 
 	float GetRotationX();
-	void SetRotationX(float rotation_x);
+	glm::vec3 GetXAxis();
+	glm::vec3 GetYAxis();
+	void SetRotationX(float rotation, glm::vec3 x_axis);
 
 	float GetRotationY();
-	void SetRotationY(float rotation_y);
+	void SetRotationY(float rotation, glm::vec3 y_axis);
 	void SetRotationZ(float rotation_z);
 	void RotateZ(int direction);
 
 	glm::mat4 GetViewMatrix();
+
+	void Commit();
 
 //	glm::vec3 GetCameraPosition();
 //	void SetCameraPosition(vec3 position);

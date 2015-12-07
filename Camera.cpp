@@ -37,8 +37,12 @@ void Camera::SetTranslation(glm::vec3 translation) {
 
 glm::mat4 Camera::GetViewMatrix()
 {
-	rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z;
-	return rotation_matrix * translation_matrix;
+	glm::mat4 temp_rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z * rotation_matrix;
+	return temp_rotation_matrix * translation_matrix;
+}
+
+void Camera::Commit() {
+	rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z * rotation_matrix;
 }
 
 float Camera::GetRotationX()
@@ -46,19 +50,29 @@ float Camera::GetRotationX()
 	return rotation_x;
 }
 
+glm::vec3 Camera::GetXAxis()
+{
+	return glm::vec3(GetViewMatrix()[0]);
+}
+
+glm::vec3 Camera::GetYAxis()
+{
+	return glm::vec3(GetViewMatrix()[1]);
+}
+
 float Camera::GetRotationY()
 {
 	return rotation_y;
 }
 
-void Camera::SetRotationX(float rotation)
+void Camera::SetRotationX(float rotation, glm::vec3 x_axis)
 {
 	rotation_x = rotation;
 	rotation_matrix_x = glm::rotate(identity, rotation_x, x_axis);
 	InvalidateViewMatrix();
 }
 
-void Camera::SetRotationY(float rotation)
+void Camera::SetRotationY(float rotation, glm::vec3 x_axis)
 {
 	rotation_y = rotation;
 	rotation_matrix_y = glm::rotate(identity, rotation_y, y_axis);

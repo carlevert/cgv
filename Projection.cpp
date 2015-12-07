@@ -1,5 +1,4 @@
 #include "Projection.hpp"
-
 #include "Application.hpp"
 
 Projection::Projection()

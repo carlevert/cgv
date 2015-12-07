@@ -71,9 +71,8 @@ float* OffParser::ParseVertexCoordinate(string line)
 	boost::smatch what;
 	if (boost::regex_match(line, what, triplet_expr)) {
 		coordinates = new float[3];
-		for (unsigned int i = 1; i < what.size(); i++) {
+		for (unsigned int i = 1; i < what.size(); i++)
 			coordinates[i - 1] = boost::lexical_cast<float>(what[i]);
-		}
 	}
 	return coordinates;
 }
@@ -87,9 +86,8 @@ int* OffParser::ParseVertexFaceEdgeCount(string line)
 	boost::smatch what;
 	if (boost::regex_match(line, what, int_triplet_expr)) {
 		count = new int[3];
-		for (unsigned int i = 1; i < what.size(); i++) {
+		for (unsigned int i = 1; i < what.size(); i++)
 			count[i - 1] = boost::lexical_cast<unsigned int>(what[i]);
-		}
 	}
 	return count;
 }
@@ -101,7 +99,7 @@ Face* OffParser::ParseFaceDefinition(string line)
 	/* Get num vertices for face */
 	boost::regex num_vertices_expr("^\\s*(\\d+)\\s+(.*)$");
 	boost::smatch what;
-	unsigned int num_vertices;
+	unsigned int num_vertices = 0;
 	if (boost::regex_match(line, what, num_vertices_expr) && what.size() == 3) {
 		num_vertices = boost::lexical_cast<unsigned int>(what[1]);
 		line = what[2];
