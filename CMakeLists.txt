@@ -35,9 +35,7 @@ set(SOURCE_FILES
   main.hpp
   )
 
-# Color.cpp
-# Color.hpp
-
+ add_definitions(-DGLM_FORCE_RADIANS)
 
 # set(BOOST_ROOT C:/sdk/boost_1_59_0/)
 # set(BOOST_LIBRARYDIR C:/sdk/boost_1_59_0/stage/lib)

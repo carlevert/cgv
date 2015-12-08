@@ -1,102 +1,89 @@
 #include "Camera.hpp"
-
+#include <string>
+#include <iostream>
 #define TRACE() cout << __func__ << endl;
 
-void Camera::InvalidateViewMatrix()
-{
-	if (invalid_view_matrix != nullptr)
-		*invalid_view_matrix = true;
+using namespace std;
+
+void PrintVector(glm::vec3 v, string s) {
+	cout << s << ":" << endl;
+	cout << v.x << endl;
+	cout << v.y << endl;
+	cout << v.z << endl;
 }
 
-Camera::Camera()
-{
+Camera::Camera() {
 	Translate(initial_position);
 }
 
-Camera::~Camera()
-{
+Camera::~Camera() {
 }
 
-void Camera::Translate(glm::vec3 translation)
-{
-	this->translation += glm::transpose(rotation_matrix) * glm::vec4(translation, 0.0f);
-	this->translation_matrix = glm::translate(glm::mat4(1.0f), -1.0f *glm::vec3(this->translation));
+void Camera::Translate(glm::vec3 translation) {
+//	this->translation += glm::transpose(rotation_matrix) * glm::vec4(translation, 0.0f);
+//	this->translation_matrix = glm::translate(glm::mat4(1.0f),
+//			-1.0f * glm::vec3(this->translation)); //
+
+	glm::mat4 view = GetViewMatrix();
+
+	/*glm::vec3 u = glm::vec3(view[0]);
+	glm::vec3 v = glm::vec3(view[1]);
+	glm::vec3 n = glm::vec3(view[2]);
+
+	PrintVector(u, "u");
+	PrintVector(v, "v");
+	PrintVector(n, "n");
+	cout << endl;
+
+	translation_matrix = glm::translate(translation_matrix, u * translation.x);
+	translation_matrix = glm::translate(translation_matrix, v * translation.y);
+	translation_matrix = glm::translate(translation_matrix, n * translation.z);*/
+
+	auto t = glm::transpose(view) * glm::vec4(-translation, 0);
+	translation_matrix = glm::translate(translation_matrix, glm::vec3(t));
+
 	InvalidateViewMatrix();
 }
 
-glm::vec3 Camera::GetTranslation()
-{
+glm::vec3 Camera::GetTranslation() {
 	return glm::vec3(translation);
 }
 
 void Camera::SetTranslation(glm::vec3 translation) {
 	this->translation = glm::transpose(rotation_matrix) * glm::vec4(translation, 0.0f);
-	this->translation_matrix = glm::translate(glm::mat4(1.0f), -1.0f * glm::vec3(this->translation));
+	this->translation_matrix = glm::translate(glm::mat4(1.0f),
+			-1.0f * glm::vec3(this->translation));
 	InvalidateViewMatrix();
 }
 
-glm::mat4 Camera::GetViewMatrix()
-{
-	glm::mat4 temp_rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z * rotation_matrix;
+glm::mat4 Camera::GetViewMatrix() {
+	glm::mat4 temp_rotation_matrix = rotation_matrix_u * rotation_matrix_v * rotation_matrix;
 	return temp_rotation_matrix * translation_matrix;
 }
 
 void Camera::Commit() {
-	rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z * rotation_matrix;
+	glm::mat4 temp_rotation_matrix = rotation_matrix_u * rotation_matrix_v * rotation_matrix;
+	rotation_matrix = temp_rotation_matrix;
+	InvalidateViewMatrix();
+	rotation_matrix_u = identity;
+	rotation_matrix_v = identity;
 }
 
-float Camera::GetRotationX()
-{
-	return rotation_x;
-}
-
-glm::vec3 Camera::GetXAxis()
-{
-	return glm::vec3(GetViewMatrix()[0]);
-}
-
-glm::vec3 Camera::GetYAxis()
-{
-	return glm::vec3(GetViewMatrix()[1]);
-}
-
-float Camera::GetRotationY()
-{
-	return rotation_y;
-}
-
-void Camera::SetRotationX(float rotation, glm::vec3 x_axis)
-{
-	rotation_x = rotation;
-	rotation_matrix_x = glm::rotate(identity, rotation_x, x_axis);
+void Camera::SetRotationU(float angle) {
+	rotation_matrix_u = glm::rotate(identity, angle, glm::vec3(1,0,0));
 	InvalidateViewMatrix();
 }
 
-void Camera::SetRotationY(float rotation, glm::vec3 x_axis)
-{
-	rotation_y = rotation;
-	rotation_matrix_y = glm::rotate(identity, rotation_y, y_axis);
+void Camera::SetRotationV(float angle) {
+	rotation_matrix_v = glm::rotate(identity, angle, glm::vec3(0,1,0));
 	InvalidateViewMatrix();
 }
 
-void Camera::SetRotationZ(float rotation)
-{
-	rotation_z = rotation;
-	rotation_matrix_z = glm::rotate(identity, rotation_z, z_axis);
-	InvalidateViewMatrix();
+void Camera::InvalidateViewMatrix() {
+	if (invalid_view_matrix != nullptr)
+		*invalid_view_matrix = true;
 }
 
-void Camera::RotateZ(int direction) {
-	if (direction == 1)
-		rotation_z += 0.1f;
-	else
-		rotation_z -= 0.1f;
-	rotation_matrix_z = glm::rotate(identity, rotation_z, z_axis);
-	rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z;
-	InvalidateViewMatrix();
-}
-
-void Camera::SetInvalidViewMatrixRef(bool* invalid_view_matrix)
-{
+void Camera::SetInvalidViewMatrixRef(bool* invalid_view_matrix) {
 	this->invalid_view_matrix = invalid_view_matrix;
 }
