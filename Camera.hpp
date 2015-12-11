@@ -29,11 +29,11 @@ public:
 	void SetInvalidViewMatrixRef(bool* invalid_view_matrix);
 
 	void Translate(glm::vec3 translation);
-	glm::vec3 GetTranslation();
+
 	void SetTranslation(glm::vec3 translation);
 
-	void SetRotationU(float rotation);
-	void SetRotationV(float rotation);
+	void RotateU(float rotation);
+	void RotateV(float rotation);
 
 	glm::mat4 GetViewMatrix();
 

@@ -17,6 +17,7 @@ Projection::~Projection()
 
 void Projection::UpdateHMatrix()
 {
+
 	h_matrix[2].x = oblique_scale * cos(oblique_angle);
 	h_matrix[2].y = oblique_scale * sin(oblique_angle);
 	if (projection_type == ProjectionType::PARALLEL)

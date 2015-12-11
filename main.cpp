@@ -3,8 +3,6 @@
 float scale = 0.005f;
 bool rotating_camera_x_y = false;
 double start_x, start_y, end_x, end_y;
-float start_rot_x, start_rot_y;
-bool lock = false;
 
 int main(int argc, char** argv) {
 
@@ -19,20 +17,21 @@ int main(int argc, char** argv) {
 	app = (void*) application;
 
 #ifdef __unix__
-	guiInit(&argc, argv);
-	initGuiWindow("ass2gui.glade");
+	/*	guiInit(&argc, argv);
+	 initGuiWindow("ass2gui.glade");
 
-	Projection* projection = application->GetProjection();
+	 Projection* projection = application->GetProjection();
 
-	gui_set_option_far(projection->GetZFar());
-	gui_set_option_top(projection->GetTop());
-	gui_set_option_oblique_angle(projection->GetObliqueAngleDegrees());
-	gui_set_option_oblique_scale(projection->GetObliqueScale());
-	if (projection->GetProjectionType() == ProjectionType::PERSPECTIVE)
-		gui_set_projection_perspective();
-	else
-		gui_set_projection_parallel();
-	gui_set_option_fov(projection->GetFovDegrees());
+	 gui_set_option_far(projection->GetZFar());
+	 gui_set_option_top(projection->GetTop());
+	 gui_set_option_oblique_angle(projection->GetObliqueAngleDegrees());
+	 gui_set_option_oblique_scale(projection->GetObliqueScale());
+	 if (projection->GetProjectionType() == ProjectionType::PERSPECTIVE)
+	 gui_set_projection_perspective();
+	 else
+	 gui_set_projection_parallel();
+	 gui_set_option_fov(projection->GetFovDegrees());
+	 */
 #endif // __unix__
 
 #ifndef __unix__
@@ -46,8 +45,8 @@ int main(int argc, char** argv) {
 			glfwGetCursorPos(window, &end_x, &end_y);
 			float dx = (float) (end_x - start_x);
 			float dy = (float) (end_y - start_y);
-			application->GetCamera()->SetRotationU(dy * scale);
-			application->GetCamera()->SetRotationV(dx * scale);
+			application->GetCamera()->RotateU(dy * scale);
+			application->GetCamera()->RotateV(dx * scale);
 		}
 		application->Display();
 		glfwSwapBuffers(window);
@@ -138,11 +137,7 @@ void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 
 	switch (key) {
 
-	case GLFW_KEY_LEFT_SHIFT:
-		lock = !lock;
-		break;
-
-		// Model transformations
+	// Model transformations
 	case GLFW_KEY_LEFT:
 		model->RotateY(-10.0f);
 		break;

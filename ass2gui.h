@@ -1,8 +1,12 @@
 #ifndef ASS2GUI_H
 #define ASS2GUI_H
 
-#include <stdlib.h>
+#include <glib.h>
 #include <gtk/gtk.h>
+#include <stdlib.h>
+
+
+
 
 /* INITIALIZERS */
 

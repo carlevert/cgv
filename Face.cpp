@@ -13,6 +13,7 @@ Face::~Face()
 
 void Face::SetNumVertices(unsigned int num_vertices)
 {
+
 	this->num_vertices = num_vertices;
 	if (vertices != nullptr)
 		delete[] vertices;
@@ -21,7 +22,7 @@ void Face::SetNumVertices(unsigned int num_vertices)
 
 unsigned int Face::GetNumVertices() const
 {
-	return num_vertices;
+	return  num_vertices;
 }
 
 void Face::SetVertices(unsigned int* vertices)
