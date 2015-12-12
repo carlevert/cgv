@@ -2,9 +2,13 @@
 
 #include <vector>
 #include <iostream>
+#include <cstring>
 
 #include <iomanip>
 #include "Face.hpp"
+#include <glm/glm.hpp>
+
+using namespace std;
 
 class Object {
 
@@ -35,18 +39,19 @@ public:
 	Face* GetFace(int i);
 	void AddFace(Face* face);
 
+	void CalculateNormals();
 	void Normalize();
 	void Triangulate();
 	void Print();
 private:
-	int num_vertices;
-	int num_faces;
-	int num_edges;
+	int num_vertices = 0;
+	int num_faces = 0;
+	int num_edges = 0;
 
-	int vertex_cursor;
-	int face_cursor;
+	int vertex_cursor = 0;
 
 	vertex* vertices;
+	float* normals = nullptr;
 
 	std::vector<Face*> faces;
 

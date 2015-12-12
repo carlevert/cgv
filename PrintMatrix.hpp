@@ -7,5 +7,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 void PrintMatrix(glm::mat4 matrix, std::string text);
+void PrintVector(glm::vec3 v, std::string s);
 
 #endif
