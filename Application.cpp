@@ -60,6 +60,7 @@ void Application::OpenOffFile(string filename)
     program_object = nullptr;
   }
 	current_object = OffParser::ParseOffFile(filename);
+	current_object->CalculateNormals();
 	current_object->Normalize();
 	current_object->Triangulate();
 	CreateBuffers();
@@ -85,9 +86,9 @@ void Application::CreateBuffers()
 	// Indicies for triangles
 	GLuint* indicies = new GLuint[current_object->GetNumFaces() * 3];
 	for (int i = 0; i < current_object->GetNumFaces(); i++) {
-		indicies[i * 3 + 0] = current_object->GetFace(i)->GetVertices()[0];
-		indicies[i * 3 + 1] = current_object->GetFace(i)->GetVertices()[1];
-		indicies[i * 3 + 2] = current_object->GetFace(i)->GetVertices()[2];
+		indicies[i * 3 + 0] = current_object->GetFace(i)->GetVertexIndicies()[0];
+		indicies[i * 3 + 1] = current_object->GetFace(i)->GetVertexIndicies()[1];
+		indicies[i * 3 + 2] = current_object->GetFace(i)->GetVertexIndicies()[2];
 	}
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * 3 * current_object->GetNumFaces(),
 		indicies, GL_STATIC_DRAW);
