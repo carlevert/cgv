@@ -47,7 +47,7 @@ public:
 private:
 	void UpdateHMatrix();
 	ProjectionType projection_type;
-	bool* invalid_projection_matrix;
+	bool* invalid_projection_matrix = nullptr;
 	glm::mat4 h_matrix;
 	glm::mat4 st_matrix;
 	glm::mat4 perspective_matrix;
