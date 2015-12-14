@@ -29,16 +29,18 @@ set(SOURCE_FILES
   Projection.cpp
   Shader.cpp
   Shader.hpp
-  ass2gui.c
-  ass2gui.h
+  Light.cpp
+  Light.hpp
+  guicontrol.c
+  guicontrol.h
+  guicallback.c
+  guicallback.h
   main.cpp
   main.hpp
   )
 
- add_definitions(-DGLM_FORCE_RADIANS)
 
-# set(BOOST_ROOT C:/sdk/boost_1_59_0/)
-# set(BOOST_LIBRARYDIR C:/sdk/boost_1_59_0/stage/lib)
+ add_definitions(-DGLM_FORCE_RADIANS)
 
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
@@ -69,7 +71,7 @@ include_directories(
   ${GLEW_INCLUDE_DIRS}
   ${GLFW_INCLUDE_DIRS}
   ${GTK3_INCLUDE_DIRS}
-  /home/dv14/dv14cks/cgv/include)
+  /home/dv14/dv14cks/cgv/glm)
 
 target_link_libraries(3dstudio
   ${Boost_LIBRARIES}

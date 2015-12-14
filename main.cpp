@@ -1,10 +1,11 @@
 #include "main.hpp"
 
-float scale = 0.005f;
+float rotation_scale = 0.005f;
 bool rotating_camera_x_y = false;
 double start_x, start_y, end_x, end_y;
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 
 	GLFWwindow* window = SetupGlfw();
 
@@ -16,27 +17,11 @@ int main(int argc, char** argv) {
 	application = new Application();
 	app = (void*) application;
 
-#ifdef __unix__
-	/*	guiInit(&argc, argv);
-	 initGuiWindow("ass2gui.glade");
+	guiInit(&argc, argv);
+	guiInitWindow("ass3gui.glade");
 
-	 Projection* projection = application->GetProjection();
 
-	 gui_set_option_far(projection->GetZFar());
-	 gui_set_option_top(projection->GetTop());
-	 gui_set_option_oblique_angle(projection->GetObliqueAngleDegrees());
-	 gui_set_option_oblique_scale(projection->GetObliqueScale());
-	 if (projection->GetProjectionType() == ProjectionType::PERSPECTIVE)
-	 gui_set_projection_perspective();
-	 else
-	 gui_set_projection_parallel();
-	 gui_set_option_fov(projection->GetFovDegrees());
-	 */
-#endif // __unix__
 
-#ifndef __unix__
-	application->OpenOffFile("off/cube.off");
-#endif
 
 	application->OpenOffFile("off/cube.off");
 
@@ -45,15 +30,13 @@ int main(int argc, char** argv) {
 			glfwGetCursorPos(window, &end_x, &end_y);
 			float dx = (float) (end_x - start_x);
 			float dy = (float) (end_y - start_y);
-			application->GetCamera()->RotateU(dy * scale);
-			application->GetCamera()->RotateV(dx * scale);
+			application->GetCamera()->RotateU(dy * rotation_scale);
+			application->GetCamera()->RotateV(dx * rotation_scale);
 		}
 		application->Display();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-#ifdef __unix__
 		guiMainIteration();
-#endif // __unix__
 	}
 
 	delete application;
@@ -61,7 +44,8 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-GLFWwindow* SetupGlfw() {
+GLFWwindow* SetupGlfw()
+{
 	if (!glfwInit()) {
 		std::cerr << "Could not initialize GLFW" << std::endl;
 		exit(EXIT_FAILURE);
@@ -90,19 +74,23 @@ GLFWwindow* SetupGlfw() {
 	return window;
 }
 
-void GlfwErrorCallback(int error, const char* description) {
+void GlfwErrorCallback(int error, const char* description)
+{
 	cerr << error << ": " << description << endl;
 }
 
-void GlfwWindowCloseCallback(GLFWwindow* window) {
+void GlfwWindowCloseCallback(GLFWwindow* window)
+{
 	glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
-void GlfwFramebufferSizeCallback(GLFWwindow* window, int width, int height) {
+void GlfwFramebufferSizeCallback(GLFWwindow* window, int width, int height)
+{
 	application->SetViewportSize(width, height);
 }
 
-void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
 	Camera* camera = application->GetCamera();
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		if (action == GLFW_PRESS) {
@@ -120,11 +108,13 @@ void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mod
 	}
 }
 
-void GlfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+void GlfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
 	// application->GetCamera()->RotateZ((int)yoffset);
 }
 
-void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
 	float delta = 0.1f;
 	float angle = 10.0f;
 
@@ -137,93 +127,93 @@ void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 
 	switch (key) {
 
-	// Model transformations
-	case GLFW_KEY_LEFT:
-		model->RotateY(-10.0f);
-		break;
-	case GLFW_KEY_RIGHT:
-		model->RotateY(10.0f);
-		break;
-	case GLFW_KEY_UP:
-		model->RotateX(-10.0f);
-		break;
-	case GLFW_KEY_DOWN:
-		model->RotateX(10.0f);
-		break;
-	case GLFW_KEY_J:
-		model->Translate(glm::vec2(-delta, 0.0f));
-		break;
-	case GLFW_KEY_L:
-		model->Translate(glm::vec2(delta, 0.0f));
-		break;
-	case GLFW_KEY_I:
-		model->Translate(glm::vec2(0.0f, delta));
-		break;
-	case GLFW_KEY_K:
-		model->Translate(glm::vec2(0.0f, -delta));
-		break;
-	case GLFW_KEY_KP_ADD:
-		model->Scale(1.2f);
-		break;
-	case GLFW_KEY_KP_SUBTRACT:
-		model->Scale(1.0f / 1.2f);
-		break;
+		// Model transformations
+		case GLFW_KEY_LEFT:
+			model->RotateY(-10.0f);
+			break;
+		case GLFW_KEY_RIGHT:
+			model->RotateY(10.0f);
+			break;
+		case GLFW_KEY_UP:
+			model->RotateX(-10.0f);
+			break;
+		case GLFW_KEY_DOWN:
+			model->RotateX(10.0f);
+			break;
+		case GLFW_KEY_J:
+			model->Translate(glm::vec2(-delta, 0.0f));
+			break;
+		case GLFW_KEY_L:
+			model->Translate(glm::vec2(delta, 0.0f));
+			break;
+		case GLFW_KEY_I:
+			model->Translate(glm::vec2(0.0f, delta));
+			break;
+		case GLFW_KEY_K:
+			model->Translate(glm::vec2(0.0f, -delta));
+			break;
+		case GLFW_KEY_KP_ADD:
+			model->Scale(1.2f);
+			break;
+		case GLFW_KEY_KP_SUBTRACT:
+			model->Scale(1.0f / 1.2f);
+			break;
 
-		// Projection transformations
-	case GLFW_KEY_COMMA:
-		projection->SetFovDegrees(projection->GetFovDegrees() + 3.0f);
-		break;
-	case GLFW_KEY_PERIOD:
-		projection->SetFovDegrees(projection->GetFovDegrees() - 3.0f);
-		break;
-	case GLFW_KEY_P:
-		if (projection->GetProjectionType() == ProjectionType::PERSPECTIVE)
-			projection->SetProjectionType(ProjectionType::PARALLEL);
-		else
-			projection->SetProjectionType(ProjectionType::PERSPECTIVE);
-		break;
-	case GLFW_KEY_V:
-		projection->SetObliqueAngleDegrees(projection->GetObliqueAngleDegrees() - 5.0f);
-		break;
-	case GLFW_KEY_B:
-		projection->SetObliqueAngleDegrees(projection->GetObliqueAngleDegrees() + 5.0f);
-		break;
-	case GLFW_KEY_N:
-		projection->SetObliqueScale(projection->GetObliqueScale() - 0.1f);
-		break;
-	case GLFW_KEY_M:
-		projection->SetObliqueScale(projection->GetObliqueScale() + 0.1f);
-		break;
+			// Projection transformations
+		case GLFW_KEY_COMMA:
+			projection->SetFovDegrees(projection->GetFovDegrees() + 3.0f);
+			break;
+		case GLFW_KEY_PERIOD:
+			projection->SetFovDegrees(projection->GetFovDegrees() - 3.0f);
+			break;
+		case GLFW_KEY_P:
+			if (projection->GetProjectionType() == ProjectionType::PERSPECTIVE)
+				projection->SetProjectionType(ProjectionType::PARALLEL);
+			else
+				projection->SetProjectionType(ProjectionType::PERSPECTIVE);
+			break;
+		case GLFW_KEY_V:
+			projection->SetObliqueAngleDegrees(projection->GetObliqueAngleDegrees() - 5.0f);
+			break;
+		case GLFW_KEY_B:
+			projection->SetObliqueAngleDegrees(projection->GetObliqueAngleDegrees() + 5.0f);
+			break;
+		case GLFW_KEY_N:
+			projection->SetObliqueScale(projection->GetObliqueScale() - 0.1f);
+			break;
+		case GLFW_KEY_M:
+			projection->SetObliqueScale(projection->GetObliqueScale() + 0.1f);
+			break;
 
-		// View (Camera transformations)
-	case GLFW_KEY_W:
-		// Up,  move p_0 and p_ref relative the cameras positive y-axis
-		camera->Translate(glm::vec3(0.0f, delta, 0.0f));
-		break;
-	case GLFW_KEY_S:
-		// Down, move p_0 and p_ref relative the cameras negative y-axis
-		camera->Translate(glm::vec3(0.0f, -delta, 0.0f));
-		break;
-	case GLFW_KEY_A:
-		// Right,  move p_0 and p_ref relative the cameras positive x-axis
-		camera->Translate(glm::vec3(-delta, 0.0f, 0.0f));
-		break;
-	case GLFW_KEY_D:
-		// Left, move p_0 and p_ref relative the cameras negative x-axis
-		camera->Translate(glm::vec3(delta, 0.0f, 0.0f));
-		break;
-	case GLFW_KEY_Z:
-		// Forward, move p_0 and p_ref relative the cameras negative z-axis
-		camera->Translate(glm::vec3(0.0f, 0.0f, -delta));
-		break;
-	case GLFW_KEY_X:
-		// Backward, move p_0 and p_ref relative the cameras positive z-axis
-		camera->Translate(glm::vec3(0.0f, 0.0f, delta));
-		break;
+			// View (Camera transformations)
+		case GLFW_KEY_W:
+			// Up,  move p_0 and p_ref relative the cameras positive y-axis
+			camera->Translate(glm::vec3(0.0f, delta, 0.0f));
+			break;
+		case GLFW_KEY_S:
+			// Down, move p_0 and p_ref relative the cameras negative y-axis
+			camera->Translate(glm::vec3(0.0f, -delta, 0.0f));
+			break;
+		case GLFW_KEY_A:
+			// Right,  move p_0 and p_ref relative the cameras positive x-axis
+			camera->Translate(glm::vec3(-delta, 0.0f, 0.0f));
+			break;
+		case GLFW_KEY_D:
+			// Left, move p_0 and p_ref relative the cameras negative x-axis
+			camera->Translate(glm::vec3(delta, 0.0f, 0.0f));
+			break;
+		case GLFW_KEY_Z:
+			// Forward, move p_0 and p_ref relative the cameras negative z-axis
+			camera->Translate(glm::vec3(0.0f, 0.0f, -delta));
+			break;
+		case GLFW_KEY_X:
+			// Backward, move p_0 and p_ref relative the cameras positive z-axis
+			camera->Translate(glm::vec3(0.0f, 0.0f, delta));
+			break;
 
-	case GLFW_KEY_Q:
-		glfwSetWindowShouldClose(window, GL_TRUE);
-		break;
+		case GLFW_KEY_Q:
+			glfwSetWindowShouldClose(window, GL_TRUE);
+			break;
 
 	}
 }

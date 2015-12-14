@@ -43,18 +43,18 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/carlevert/cgv2
+CMAKE_SOURCE_DIR = /home/dv14/dv14cks/cgv/assignment
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/carlevert/cgv2
+CMAKE_BINARY_DIR = /home/dv14/dv14cks/cgv/assignment
 
 #=============================================================================
 # Targets provided globally by CMake.
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -73,9 +73,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/carlevert/cgv2/CMakeFiles /home/carlevert/cgv2/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dv14/dv14cks/cgv/assignment/CMakeFiles /home/dv14/dv14cks/cgv/assignment/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/carlevert/cgv2/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dv14/dv14cks/cgv/assignment/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -210,6 +210,30 @@ Face.s: Face.cpp.s
 Face.cpp.s:
 	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/Face.cpp.s
 .PHONY : Face.cpp.s
+
+Light.o: Light.cpp.o
+.PHONY : Light.o
+
+# target to build an object file
+Light.cpp.o:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/Light.cpp.o
+.PHONY : Light.cpp.o
+
+Light.i: Light.cpp.i
+.PHONY : Light.i
+
+# target to preprocess a source file
+Light.cpp.i:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/Light.cpp.i
+.PHONY : Light.cpp.i
+
+Light.s: Light.cpp.s
+.PHONY : Light.s
+
+# target to generate assembly for a file
+Light.cpp.s:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/Light.cpp.s
+.PHONY : Light.cpp.s
 
 LineReader.o: LineReader.cpp.o
 .PHONY : LineReader.o
@@ -403,29 +427,53 @@ Shader.cpp.s:
 	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/Shader.cpp.s
 .PHONY : Shader.cpp.s
 
-ass2gui.o: ass2gui.c.o
-.PHONY : ass2gui.o
+guicallback.o: guicallback.c.o
+.PHONY : guicallback.o
 
 # target to build an object file
-ass2gui.c.o:
-	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/ass2gui.c.o
-.PHONY : ass2gui.c.o
+guicallback.c.o:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/guicallback.c.o
+.PHONY : guicallback.c.o
 
-ass2gui.i: ass2gui.c.i
-.PHONY : ass2gui.i
+guicallback.i: guicallback.c.i
+.PHONY : guicallback.i
 
 # target to preprocess a source file
-ass2gui.c.i:
-	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/ass2gui.c.i
-.PHONY : ass2gui.c.i
+guicallback.c.i:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/guicallback.c.i
+.PHONY : guicallback.c.i
 
-ass2gui.s: ass2gui.c.s
-.PHONY : ass2gui.s
+guicallback.s: guicallback.c.s
+.PHONY : guicallback.s
 
 # target to generate assembly for a file
-ass2gui.c.s:
-	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/ass2gui.c.s
-.PHONY : ass2gui.c.s
+guicallback.c.s:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/guicallback.c.s
+.PHONY : guicallback.c.s
+
+guicontrol.o: guicontrol.c.o
+.PHONY : guicontrol.o
+
+# target to build an object file
+guicontrol.c.o:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/guicontrol.c.o
+.PHONY : guicontrol.c.o
+
+guicontrol.i: guicontrol.c.i
+.PHONY : guicontrol.i
+
+# target to preprocess a source file
+guicontrol.c.i:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/guicontrol.c.i
+.PHONY : guicontrol.c.i
+
+guicontrol.s: guicontrol.c.s
+.PHONY : guicontrol.s
+
+# target to generate assembly for a file
+guicontrol.c.s:
+	$(MAKE) -f CMakeFiles/3dstudio.dir/build.make CMakeFiles/3dstudio.dir/guicontrol.c.s
+.PHONY : guicontrol.c.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -472,6 +520,9 @@ help:
 	@echo "... Face.o"
 	@echo "... Face.i"
 	@echo "... Face.s"
+	@echo "... Light.o"
+	@echo "... Light.i"
+	@echo "... Light.s"
 	@echo "... LineReader.o"
 	@echo "... LineReader.i"
 	@echo "... LineReader.s"
@@ -496,9 +547,12 @@ help:
 	@echo "... Shader.o"
 	@echo "... Shader.i"
 	@echo "... Shader.s"
-	@echo "... ass2gui.o"
-	@echo "... ass2gui.i"
-	@echo "... ass2gui.s"
+	@echo "... guicallback.o"
+	@echo "... guicallback.i"
+	@echo "... guicallback.s"
+	@echo "... guicontrol.o"
+	@echo "... guicontrol.i"
+	@echo "... guicontrol.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

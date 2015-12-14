@@ -24,7 +24,6 @@ Application::~Application()
 	delete program_object;
 }
 
-
 void Application::SetupOpenGl()
 {
 	// Set graphics attributes
@@ -47,18 +46,20 @@ void Application::SetupOpenGl()
 	model_location = program_object->GetUniformLocation("model");
 	view_location = program_object->GetUniformLocation("view");
 	projection_location = program_object->GetUniformLocation("projection");
+	light_pos_location = program_object->GetUniformLocation("light_pos");
+	light_intensity_location = program_object->GetUniformLocation("light_intensity");
 }
 
 void Application::OpenOffFile(string filename)
 {
-  if (current_object != nullptr) {
-    delete current_object;
-    current_object = nullptr;
-  }
-  if (program_object != nullptr) {
-    delete program_object;
-    program_object = nullptr;
-  }
+	if (current_object != nullptr) {
+		delete current_object;
+		current_object = nullptr;
+	}
+	if (program_object != nullptr) {
+		delete program_object;
+		program_object = nullptr;
+	}
 	current_object = OffParser::ParseOffFile(filename);
 	current_object->CalculateNormals();
 	current_object->Normalize();
@@ -77,11 +78,11 @@ void Application::CreateBuffers()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
 
 	glEnableVertexAttribArray(position_location);
-	glVertexAttribPointer(position_location, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)0);
+	glVertexAttribPointer(position_location, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*) 0);
 
 	// Vertices
 	glBufferData(GL_ARRAY_BUFFER, current_object->GetNumVertices() * sizeof(Object::vertex),
-		current_object->GetVertices(), GL_STATIC_DRAW);
+			current_object->GetVertices(), GL_STATIC_DRAW);
 
 	// Indicies for triangles
 	GLuint* indicies = new GLuint[current_object->GetNumFaces() * 3];
@@ -91,7 +92,7 @@ void Application::CreateBuffers()
 		indicies[i * 3 + 2] = current_object->GetFace(i)->GetVertexIndicies()[2];
 	}
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * 3 * current_object->GetNumFaces(),
-		indicies, GL_STATIC_DRAW);
+			indicies, GL_STATIC_DRAW);
 	delete[] indicies;
 }
 
@@ -103,12 +104,14 @@ void Application::Display()
 		UpdateViewMatrix();
 	if (invalid_projection_matrix)
 		UpdateProjectionMatrix();
+	if (invalid_light_properties)
+		UpdateLightProperties();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (current_object != nullptr) {
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
-		glDrawElements(GL_TRIANGLES, current_object->GetNumFaces() * 3, GL_UNSIGNED_INT, (GLvoid*)0);
+		glDrawElements(GL_TRIANGLES, current_object->GetNumFaces() * 3, GL_UNSIGNED_INT, (GLvoid*) 0);
 	}
 	glFlush();
 }
@@ -137,24 +140,37 @@ void Application::UpdateProjectionMatrix()
 	// PrintMatrix(projection.GetProjectionMatrix(), "projection:");
 }
 
+void Application::UpdateLightProperties()
+{
+	const float* intensity = light.GetIntensity();
+	const float* position = light.GetPosition();
+	glUniform3fv(light_intensity_location, 1, intensity);
+	glUniform3fv(light_pos_location, 1, position);
+	invalid_light_properties = false;
+}
+
 void Application::SetViewportSize(int width, int height)
 {
-	projection.SetViewportDimensions(width, height);
-	glViewport(0, 0, width, height);
+projection.SetViewportDimensions(width, height);
+glViewport(0, 0, width, height);
 }
 
 Model* Application::GetModel()
 {
-	return &model;
+return &model;
 }
 
 Camera* Application::GetCamera()
 {
-	return &camera;
+return &camera;
 }
 
 Projection* Application::GetProjection()
 {
-	return &projection;
+return &projection;
 }
 
+Light* Application::GetLight()
+{
+return &light;
+}

@@ -7,7 +7,9 @@
 #ifdef __unix__
 #include <gtk/gtk.h>
 extern "C" {
-#include "ass2gui.h"
+#include "guicontrol.h"
+#include "guicallback.h"
+
 }
 #endif
 
