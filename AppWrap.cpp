@@ -32,3 +32,17 @@ void call_SetObliqueAngle(Application* a, float oblique_angle) {
 void call_SetPerspectiveProjection(Application* a) {
   a->GetProjection()->SetProjectionType(ProjectionType::PERSPECTIVE);
 }
+
+void call_SetLightIntensityR(Application* a, float value) {
+	a->GetLight()->SetIntensityR(value);
+}
+void call_SetLightIntensityG(Application* a, float value) {
+	a->GetLight()->SetIntensityG(value);
+}
+void call_SetLightIntensityB(Application* a, float value) {
+	a->GetLight()->SetIntensityB(value);
+}
+
+void call_FlipNormals(Application* a) {
+	a->GetObject()->ToggleFlipNormals();
+}

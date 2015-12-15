@@ -208,3 +208,7 @@ void Object::Triangulate() {
 		face->Print();
 	}
 }
+
+void Object::ToggleFlipNormals() {
+	cout << "Not implement" << endl;
+}

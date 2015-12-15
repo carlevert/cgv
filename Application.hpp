@@ -63,5 +63,6 @@ public:
 	Camera* GetCamera();
 	Projection* GetProjection();
 	Light* GetLight();
+	Object* GetObject();
 };
 

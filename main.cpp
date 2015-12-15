@@ -20,8 +20,11 @@ int main(int argc, char** argv)
 	guiInit(&argc, argv);
 	guiInitWindow("ass3gui.glade");
 
+	double default_light_intensity[3] = { 0.4, 0.5, 0.6 };
+	double default_ambient_light_intensity[3] = { 0.5, 0.5, 0.5 };
 
-
+	gui_set_I_light(default_light_intensity);
+	gui_set_I_ambient(default_ambient_light_intensity);
 
 	application->OpenOffFile("off/cube.off");
 

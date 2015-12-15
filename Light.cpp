@@ -9,13 +9,10 @@
 
 Light::Light()
 {
-	// TODO Auto-generated constructor stub
-
 }
 
 Light::~Light()
 {
-	// TODO Auto-generated destructor stub
 }
 
 void Light::InvalidateLightPos() {
@@ -25,6 +22,22 @@ void Light::InvalidateLightPos() {
 
 void Light::SetInvalidLightPosRef(bool* invalid_light_pos) {
 	this->invalid_light_pos = invalid_light_pos;
+}
+
+void Light::SetIntensityR(float intensity) {
+	this->intensity.r = intensity;
+	std::cout << "Red intensity " << intensity << std::endl;
+	InvalidateLightPos();
+}
+
+void Light::SetIntensityG(float intensity) {
+	this->intensity.g = intensity;
+	InvalidateLightPos();
+}
+
+void Light::SetIntensityB(float intensity) {
+	this->intensity.b = intensity;
+	InvalidateLightPos();
 }
 
 float* Light::GetIntensity() {

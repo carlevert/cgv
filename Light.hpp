@@ -1,6 +1,7 @@
 #ifndef LIGHT_HPP_
 #define LIGHT_HPP_
 
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -12,6 +13,9 @@ public:
 	virtual ~Light();
 	void SetInvalidLightPosRef(bool* invalid_light_pos);
 	float* GetIntensity();
+	void SetIntensityR(float intensity);
+	void SetIntensityG(float intensity);
+	void SetIntensityB(float intensity);
 	float* GetPosition();
 private:
 	void InvalidateLightPos();

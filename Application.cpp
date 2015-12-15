@@ -151,26 +151,30 @@ void Application::UpdateLightProperties()
 
 void Application::SetViewportSize(int width, int height)
 {
-projection.SetViewportDimensions(width, height);
-glViewport(0, 0, width, height);
+	projection.SetViewportDimensions(width, height);
+	glViewport(0, 0, width, height);
 }
 
 Model* Application::GetModel()
 {
-return &model;
+	return &model;
 }
 
 Camera* Application::GetCamera()
 {
-return &camera;
+	return &camera;
 }
 
 Projection* Application::GetProjection()
 {
-return &projection;
+	return &projection;
 }
 
 Light* Application::GetLight()
 {
-return &light;
+	return &light;
+}
+
+Object* Application::GetObject() {
+	return current_object;
 }

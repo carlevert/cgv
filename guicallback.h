@@ -7,6 +7,9 @@
 
 #include "guicontrol.h"
 
+extern void* app;
+struct Application;
+
 /* CALLBACKS FROM GUI */
 
 void     on_off_chooser_selection_changed(GtkFileChooser*, gpointer);
