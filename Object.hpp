@@ -43,11 +43,12 @@ public:
 	void Normalize();
 	void Triangulate();
 	void Print();
-	void ToggleFlipNormals();
+	void SetFlipNormals(bool flip_normals);
 private:
 	int num_vertices = 0;
 	int num_faces = 0;
 	int num_edges = 0;
+	bool flip_normals = false;
 
 	int vertex_cursor = 0;
 	vertex* vertices;

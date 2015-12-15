@@ -2,12 +2,14 @@
 
 extern void* app;
 
-void call_OpenOffFile(void* a, char* filename);
-void call_FlipNormals(void* a);
+struct Application;
 
-void call_SetLightIntensityR(void* a, float val);
-void call_SetLightIntensityG(void* a, float val);
-void call_SetLightIntensityB(void* a, float val);
+void call_OpenOffFile(struct Application* a, char* filename);
+void call_FlipNormals(struct Application* a, int flip_normals);
+
+void call_SetLightIntensityR(struct Application* a, float val);
+void call_SetLightIntensityG(struct Application* a, float val);
+void call_SetLightIntensityB(struct Application* a, float val);
 
 void on_off_chooser_selection_changed(GtkFileChooser *filechooser, gpointer user_data)
 {
@@ -20,7 +22,7 @@ void on_flip_normals_toggled(GtkToggleButton *togglebutton, gpointer user_data)
 {
 	gboolean b = gtk_toggle_button_get_active(togglebutton);
 	printf("flip normals: %i\n", b);
-	call_FlipNormals(app);
+	call_FlipNormals(app, b);
 }
 
 void on_light_x_value_changed(GtkAdjustment*o, gpointer user_data)

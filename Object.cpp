@@ -209,6 +209,7 @@ void Object::Triangulate() {
 	}
 }
 
-void Object::ToggleFlipNormals() {
-	cout << "Not implement" << endl;
+void Object::SetFlipNormals(bool flip_normals) {
+	this->flip_normals = flip_normals;
+	cout << "Object::ToggleFlipNormals(): Not implemented " << flip_normals << endl;
 }

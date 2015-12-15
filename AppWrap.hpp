@@ -26,5 +26,6 @@ extern "C" void call_SetLightIntensityB(Application* a, float value);
 
 
 extern "C" void call_OpenOffFile(Application* a, char* filename);
-extern "C" void call_FlipNormals(void* a);
+extern "C" void call_FlipNormals(Application* a, bool flip_normals);
+
 #endif /* APPWRAP_HPP_ */

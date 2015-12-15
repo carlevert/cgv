@@ -43,6 +43,6 @@ void call_SetLightIntensityB(Application* a, float value) {
 	a->GetLight()->SetIntensityB(value);
 }
 
-void call_FlipNormals(Application* a) {
-	a->GetObject()->ToggleFlipNormals();
+void call_FlipNormals(Application* a, bool flip_normals) {
+	a->GetObject()->SetFlipNormals(flip_normals);
 }
